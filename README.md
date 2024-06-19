@@ -8,13 +8,13 @@
 
 2. **Get the package**
    ```bash
-   go get github.com/devisettymahidhar315/zin1
+   go get github.com/devisettymahidhar315/cache
 3. **Create a new file in the directory with the following content**
    ```bash
    package main
-   import "github.com/devisettymahidhar315/zin1"
+   import "github.com/devisettymahidhar315/cache"
    func main() {
-    r := zin1.Hello()
+    r := cache.Hello()
     r.Run()
    }
 4. **Run the Program**
