@@ -29,6 +29,14 @@ func TestPut_inmemory(t *testing.T) {
 	if result != "1" {
 		t.Error("Expected value '1', got", result)
 	}
+	cache.DEL_ALL()
+	// checking the time to live
+	cache.Put("a", "1", len1, 5)
+	time.Sleep(6 * time.Second)
+	r := cache.Get("a")
+	if r != "" {
+		t.Error("Expected value ''. got ", r)
+	}
 }
 
 // TestGet_inmemory tests the Get method of the inmemory cache
@@ -276,13 +284,22 @@ func TestGET(t *testing.T) {
 	// Test case 1: Get a non-existent key
 	res1 := cache.Get("c")
 	if res1 != "" {
-		t.Error("case 1 error: expected empty string for non-existent key")
+		t.Error("expected '' got ", res1)
 	}
 
 	// Test case 2: Get an existing key
 	res2 := cache.Get("a")
 	if res2 != "1" {
-		t.Error("case 2 error: expected '1' for key 'a'")
+		t.Error("expected '1' got ", res2)
+	}
+
+	//time to live
+	cache.Del_ALL()
+	cache.Set("a", "1", len1, 5)
+	time.Sleep(6 * time.Second)
+	res3 := cache.Get("a")
+	if res3 != "" {
+		t.Error("expected '' got ", res3)
 	}
 }
 
