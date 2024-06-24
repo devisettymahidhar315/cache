@@ -8,12 +8,15 @@ import (
 
 const len = 2
 
-//benchmarking
+// benchmarking
+
+//multi-cache
 //becnchmarking for set method of the multi-cache
 
 func BenchmarkSet(b *testing.B) {
 	// Create a new multi-cache instance
 	cache := multi_cache.NewMultiCache()
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cache.Set("a", "1", len, -1)
 	}
@@ -24,6 +27,8 @@ func BenchmarkSet(b *testing.B) {
 func BenchmarkGet(b *testing.B) {
 	// Create a new multi-cache instance
 	cache := multi_cache.NewMultiCache()
+	cache.Set("a", "1", len, -1)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cache.Get("a")
 
@@ -34,12 +39,11 @@ func BenchmarkGet(b *testing.B) {
 
 func BenchmarkDel(b *testing.B) {
 	// Create a new multi-cache instance
-
 	cache := multi_cache.NewMultiCache()
 	cache.Set("a", "1", len, -1)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cache.Del("a")
-
 	}
 }
 
@@ -47,12 +51,11 @@ func BenchmarkDel(b *testing.B) {
 
 func BenchmarkPrintRedis(b *testing.B) {
 	// Create a new multi-cache instance
-
 	cache := multi_cache.NewMultiCache()
 	cache.Set("a", "1", len, -1)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cache.Print_redis()
-
 	}
 }
 
@@ -60,10 +63,22 @@ func BenchmarkPrintRedis(b *testing.B) {
 
 func BenchmarkPrintinmemory(b *testing.B) {
 	// Create a new multi-cache instance
-
 	cache := multi_cache.NewMultiCache()
 	cache.Set("a", "1", len, -1)
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cache.Print_in_mem()
+	}
+}
+
+//benchmarking for del_all of the cache
+
+func BenchmarkDel_All(b *testing.B) {
+	// Create a new multi-cache instance
+	cache := multi_cache.NewMultiCache()
+	cache.Set("a", "1", len, -1)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cache.Del_ALL()
 	}
 }
