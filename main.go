@@ -1,20 +1,52 @@
-package cache
+package main
 
 import (
+	"os"
+	"strconv"
+
 	"github.com/devisettymahidhar315/cache/api"
 	"github.com/gin-gonic/gin"
 )
 
-func Hello() *gin.Engine {
+func main() {
+	var value string
+	if len(os.Args) < 2 {
+		value = "2"
+	} else {
+		// Read the argument
+		value = os.Args[1]
+
+	}
+	length, _ := strconv.Atoi(value)
+
 	// Initialize the Gin router and routes
 	r := gin.Default()
-
+	// multi cache
 	r.GET("/:key", api.GetCacheValue)
 	r.DELETE("/:key", api.DeleteCacheValue)
-	r.POST("/:key/:value/:time", api.SetCacheValue)
-	r.GET("/redis/print", api.PrintRedisCache)
-	r.GET("/inmemory/print", api.PrintInMemoryCache)
+	r.POST("/:key/:value/:time", func(ctx *gin.Context) {
+		api.SetCacheValue(ctx, length) // Pass the length to the handler
+	})
+	r.GET("/print", api.PrintCache)
 	r.DELETE("/all", api.DeleteAll)
 
-	return r
+	//redis
+	r.GET("/redis/:key", api.RedisGet)
+	r.DELETE("/redis/:key", api.RedisDeleteValue)
+	r.POST("/redis/:key/:value/:time", func(ctx *gin.Context) {
+		api.RedisSetValue(ctx, length) // Pass the length to the handler
+	})
+	r.GET("/redis/print", api.RedisPrint)
+	r.DELETE("/redis/all", api.RedisDeleteAll)
+
+	//inmemory
+	r.GET("/inmemory/:key", api.InmemoryGet)
+	r.DELETE("/inmemory/:key", api.InmemoryDeleteValue)
+	r.POST("/inmemory/:key/:value/:time", func(ctx *gin.Context) {
+		api.InmemorySetValue(ctx, length) // Pass the length to the handler
+	})
+	r.GET("/inmemory/print", api.InmemoryPrint)
+	r.DELETE("/inmemory/all", api.InmemoryDeleteAll)
+
+	r.Run()
 }

@@ -40,11 +40,8 @@ func NewLRUCache(cleanupTime time.Duration) *LRUCache {
 func (c *LRUCache) startCleanupRoutine() {
 	ticker := time.NewTicker(c.cleanupTime)
 	defer ticker.Stop()
-	for {
-		select {
-		case <-ticker.C:
-			c.cleanup()
-		}
+	for range ticker.C {
+		c.cleanup()
 	}
 }
 
@@ -138,7 +135,7 @@ func (c *LRUCache) Print() string {
 		}
 		elem = next
 	}
-	return fmt.Sprintf(strings.Join(orderedItems, ", "))
+	return strings.Join(orderedItems, ", ")
 }
 
 // DEL_ALL deletes the entire cache.
