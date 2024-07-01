@@ -19,7 +19,13 @@
    }
 4. **Run the Program**
    ```bash
+      go run main.go length
+   ```
+   length means number of elements are storing
+   ```bash
       go run main.go
+   ```
+   without length if we run the program, it takes the default length has 2
 
 # Functions Present in the Project
 ### `get`  
