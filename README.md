@@ -25,7 +25,7 @@
    ```bash
       go run main.go
    ```
-   without length it takes the default length has 2
+   without length if we run the program, it takes the default length has 2
 
 # Functions Present in the Project
 ### `get`  
