@@ -14,9 +14,6 @@ var cache = multi_cache.NewMultiCache()
 var redis_cache = redis.NewLRUCache()
 var inmemory_cache = in_memory.NewLRUCache(1)
 
-// var redis_cache = redis.NewLRUCache()
-//var inmemory_cache = in_memory.NewLRUCache(1)
-
 // benchmarking
 
 //multi-cache

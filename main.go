@@ -1,4 +1,4 @@
-package main
+package cache
 
 import (
 	"os"
@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
+func Hello() *gin.Engine {
 	var value string
 	if len(os.Args) < 2 {
 		value = "2"
@@ -48,5 +48,5 @@ func main() {
 	r.GET("/inmemory/print", api.InmemoryPrint)
 	r.DELETE("/inmemory/all", api.InmemoryDeleteAll)
 
-	r.Run()
+	return r
 }
